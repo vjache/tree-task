@@ -13,19 +13,13 @@ import static org.junit.Assert.*;
  */
 public class BasicTest {
 
-    private static class TotalData {
-        public Boolean isPasportValid;
-        public Boolean isWanted;
-        public Boolean isTerrorist;
-    }
-
     @Test
     public void simpleTaskTree() throws InterruptedException {
 
         TaskNode<TotalData> validatePassport = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("validatePassport");
-                result.isPasportValid = true;
+                result.setPasportValid(true);
                 return Success;
             }
         };
@@ -47,7 +41,7 @@ public class BasicTest {
         TaskNode<TotalData> checkWantedInternet = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("checkWantedInternet");
-                result.isWanted = true;
+                result.setWanted(true);
                 return Success;
             }
         };
@@ -55,7 +49,7 @@ public class BasicTest {
         TaskNode<TotalData> checkTerrorist = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("checkTerrorist");
-                result.isTerrorist = false;
+                result.setTerrorist(false);
                 return Success;
             }
         };
@@ -79,15 +73,15 @@ public class BasicTest {
 
         final TotalData result = new TotalData();
 
-        assertEquals(null, result.isPasportValid);
-        assertEquals(null, result.isWanted);
-        assertEquals(null, result.isTerrorist);
+        assertEquals(null, result.getPasportValid());
+        assertEquals(null, result.getWanted());
+        assertEquals(null, result.getTerrorist());
 
         TaskNodeExecutor.execute(result, validatePassport);
 
-        assertTrue(result.isPasportValid);
-        assertTrue(result.isWanted);
-        assertFalse(result.isTerrorist);
+        assertTrue(result.getPasportValid());
+        assertTrue(result.getWanted());
+        assertFalse(result.getTerrorist());
     }
 
     @Test
@@ -96,7 +90,7 @@ public class BasicTest {
         TaskNode<TotalData> validatePassport = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("validatePassport");
-                result.isPasportValid = true;
+                result.setPasportValid(true);
                 return Failure; // Ensure failure branch will be choosen
             }
         };
@@ -111,7 +105,7 @@ public class BasicTest {
         TaskNode<TotalData> checkTerrorist = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("checkTerrorist");
-                result.isTerrorist = false;
+                result.setTerrorist(false);
                 return Success;
             }
         };
@@ -135,15 +129,15 @@ public class BasicTest {
 
         final TotalData result = new TotalData();
 
-        assertEquals(null, result.isPasportValid);
-        assertEquals(null, result.isWanted);
-        assertEquals(null, result.isTerrorist);
+        assertEquals(null, result.getPasportValid());
+        assertEquals(null, result.getWanted());
+        assertEquals(null, result.getTerrorist());
 
         TaskNodeExecutor.execute(result, validatePassport);
 
-        assertTrue(result.isPasportValid);
-        assertEquals(null, result.isWanted);
-        assertEquals(null, result.isTerrorist);
+        assertTrue(result.getPasportValid());
+        assertEquals(null, result.getWanted());
+        assertEquals(null, result.getTerrorist());
         assertTrue(isFinishExecuted.get());
     }
 
@@ -153,7 +147,7 @@ public class BasicTest {
         TaskNode<TotalData> validatePassport = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("validatePassport");
-                result.isPasportValid = true;
+                result.setPasportValid(true);
                 throw new RuntimeException("TEST"); // Ensure failure branch will be choosen
             }
         };
@@ -168,7 +162,7 @@ public class BasicTest {
         TaskNode<TotalData> checkTerrorist = new TaskNode<TotalData>() {
             Branch run(TotalData result) throws Throwable {
                 System.out.println("checkTerrorist");
-                result.isTerrorist = false;
+                result.setTerrorist(false);
                 return Success;
             }
         };
@@ -192,15 +186,15 @@ public class BasicTest {
 
         final TotalData result = new TotalData();
 
-        assertEquals(null, result.isPasportValid);
-        assertEquals(null, result.isWanted);
-        assertEquals(null, result.isTerrorist);
+        assertEquals(null, result.getPasportValid());
+        assertEquals(null, result.getWanted());
+        assertEquals(null, result.getTerrorist());
 
         TaskNodeExecutor.execute(result, validatePassport);
 
-        assertTrue(result.isPasportValid);
-        assertEquals(null, result.isWanted);
-        assertEquals(null, result.isTerrorist);
+        assertTrue(result.getPasportValid());
+        assertEquals(null, result.getWanted());
+        assertEquals(null, result.getTerrorist());
         assertTrue(isFinishExecuted.get());
     }
 

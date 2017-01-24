@@ -31,6 +31,7 @@ public class Example {
 
         TaskNode n21 = new TaskNode() {
             Branch run(Object result) throws Throwable {
+                Thread.sleep(1000);
                 System.out.println("n21");
                 return Success;
             }
@@ -49,8 +50,8 @@ public class Example {
         n2.onSuccess(n21);
         n2.onFailure(n22);
 
-        TaskNodeExecutor.execute(new Object(), root);
-        //TaskNodeForkJoinExecutor.execute(new Object(), root);
+        //TaskNodeExecutor.execute(new Object(), root);
+        TaskNodeForkJoinExecutor.execute(new Object(), root);
     }
 
 }
